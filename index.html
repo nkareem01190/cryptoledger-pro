@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Niyas Kareem | Web3 Accounting & Finance Automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --bg:         #0A0F1E;
+      --bg-card:    #111827;
+      --bg-card2:   #0E1628;
+      --border:     rgba(255,255,255,0.07);
+      --teal:       #00D4C8;
+      --teal-dim:   rgba(0,212,200,0.12);
+      --teal-glow:  rgba(0,212,200,0.25);
+      --gold:       #C9A84C;
+      --gold-dim:   rgba(201,168,76,0.12);
+      --text:       #F0EDE6;
+      --text-muted: #8B95A8;
+      --text-dim:   #4A566B;
+      --red:        #FF5C6A;
+      --radius:     12px;
+      --radius-sm:  6px;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px;
+      background: rgba(10,15,30,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta {
+      padding: 9px 20px;
+      background: var(--teal-dim);
+      border: 1px solid rgba(0,212,200,0.3);
+      border-radius: var(--radius-sm);
+      color: var(--teal) !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      transition: background 0.2s, border-color 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--teal-glow) !important; border-color: var(--teal) !important; }
+
+    /* ── PROOF-OF-WORK TICKER ── */
+    .ticker-wrap {
+      position: fixed; top: 65px; left: 0; right: 0; z-index: 99;
+      background: var(--bg-card2);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      height: 34px;
+      display: flex; align-items: center;
+    }
+    .ticker-label {
+      padding: 0 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--teal);
+      font-weight: 500;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      border-right: 1px solid var(--border);
+      background: var(--bg-card2);
+      z-index: 1;
+    }
+    .ticker-track {
+      display: flex;
+      animation: ticker 30s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-item {
+      padding: 0 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .ticker-item span { color: var(--gold); margin-right: 6px; }
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+      padding: 140px 40px 80px;
+      max-width: 1100px; margin: 0 auto;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--teal);
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block; width: 24px; height: 1px;
+      background: var(--teal);
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--teal);
+    }
+    .hero-subtitle {
+      font-size: clamp(15px, 2vw, 18px);
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 18px 0 36px;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-primary {
+      background: var(--teal);
+      color: #0A0F1E;
+    }
+    .btn-primary:hover { background: #00bfb5; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-item { }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -1px;
+    }
+    .stat-num span { color: var(--teal); }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 2px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--teal);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      max-width: 520px;
+      font-size: 15px;
+      line-height: 1.75;
+      margin-bottom: 56px;
+    }
+
+    /* ── PROJECT CARDS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .project-card:hover { border-color: rgba(0,212,200,0.25); transform: translateY(-2px); }
+    .project-card:hover::before { opacity: 1; }
+    .project-tag {
+      display: inline-flex; align-items: center;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+    .tag-python  { background: rgba(55,118,171,0.15); color: #5EB4FF; border: 1px solid rgba(94,180,255,0.2); }
+    .tag-web3    { background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(0,212,200,0.2); }
+    .tag-excel   { background: rgba(33,150,83,0.12); color: #4ADE80; border: 1px solid rgba(74,222,128,0.2); }
+    .tag-react   { background: rgba(97,218,251,0.1); color: #61DAFB; border: 1px solid rgba(97,218,251,0.2); }
+    .tag-finance { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(201,168,76,0.2); }
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .project-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .project-features {
+      list-style: none;
+      margin-bottom: 22px;
+    }
+    .project-features li {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 3px 0;
+      display: flex; align-items: flex-start; gap: 6px;
+    }
+    .project-features li::before { content: '→'; color: var(--teal); flex-shrink: 0; }
+    .project-links { display: flex; gap: 10px; }
+    .project-link {
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+    }
+    .project-link.primary {
+      background: var(--teal-dim);
+      color: var(--teal);
+      border: 1px solid rgba(0,212,200,0.2);
+    }
+    .project-link.primary:hover { background: var(--teal-glow); }
+    .project-link.ghost {
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .project-link.ghost:hover { border-color: var(--text-dim); color: var(--text); }
+
+    /* ── TOOLS GRID ── */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .tool-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      transition: border-color 0.2s;
+    }
+    .tool-item:hover { border-color: rgba(0,212,200,0.25); }
+    .tool-icon { font-size: 18px; flex-shrink: 0; }
+    .tool-name { color: var(--text); }
+    .tool-cat { font-size: 11px; color: var(--text-dim); }
+
+    /* ── CERTS ── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .cert-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      display: flex; align-items: flex-start; gap: 16px;
+      transition: border-color 0.2s;
+    }
+    .cert-card:hover { border-color: rgba(201,168,76,0.3); }
+    .cert-icon {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .cert-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .cert-issuer { font-size: 12px; color: var(--text-dim); }
+    .cert-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      margin-top: 4px;
+    }
+
+    /* ── BLOG ── */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .blog-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .blog-card:hover { border-color: rgba(0,212,200,0.25); transform: translateY(-2px); }
+    .blog-meta {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .blog-category {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--teal);
+      text-transform: uppercase;
+    }
+    .blog-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-dim); }
+    .blog-date { font-size: 12px; color: var(--text-dim); }
+    .blog-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+      line-height: 1.4;
+    }
+    .blog-excerpt { font-size: 13px; color: var(--text-muted); line-height: 1.7; flex: 1; margin-bottom: 18px; }
+    .blog-readmore {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--teal);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .blog-readmore::after { content: '→'; transition: transform 0.2s; }
+    .blog-card:hover .blog-readmore::after { transform: translateX(3px); }
+
+    /* ── ABOUT SPLIT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .about-text p { font-size: 15px; color: var(--text-muted); line-height: 1.8; margin-bottom: 16px; }
+    .about-text strong { color: var(--text); }
+    .about-stack { }
+    .stack-group { margin-bottom: 28px; }
+    .stack-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--teal);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .stack-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      padding: 6px 12px;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 56px 48px;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .contact-section .section-title { margin-bottom: 10px; }
+    .contact-section p { color: var(--text-muted); font-size: 15px; margin-bottom: 36px; }
+    .contact-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .contact-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 22px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .contact-link:hover { border-color: var(--teal); color: var(--teal); }
+    .contact-link svg { width: 16px; height: 16px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 100%; margin: 0;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .footer-logo span { color: var(--teal); }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      width: 100%; height: 1px;
+      background: var(--border);
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      section { padding: 72px 20px; }
+      .hero { padding: 120px 20px 60px; }
+      .hero-stats { gap: 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .contact-section { padding: 36px 24px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in { opacity: 0; transform: translateY(16px); animation: fadeIn 0.6s ease forwards; }
+    @keyframes fadeIn { to { opacity: 1; transform: none; } }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    /* Typing cursor */
+    .cursor {
+      display: inline-block; width: 3px; height: 0.85em;
+      background: var(--teal); vertical-align: middle;
+      margin-left: 2px; animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* Available badge */
+    .avail-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px;
+      background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 20px;
+      font-size: 12px;
+      color: #4ADE80;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+    .avail-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4ADE80;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">niyas<span>.finance</span></div>
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#tools">Tools</a>
+      <a href="#credentials">Credentials</a>
+      <a href="#blog">Blog</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="nav-cta">Hire Me</a>
+    </div>
+  </nav>
+
+  <!-- PROOF-OF-WORK TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-label">PROOF OF WORK</div>
+    <div class="ticker-track" id="ticker">
+      <div class="ticker-item"><span>✓</span> Bitwave Certified Accountant</div>
+      <div class="ticker-item"><span>✓</span> Certified Professional Blockchain Accountant (CPBA)</div>
+      <div class="ticker-item"><span>✓</span> 15+ Years Finance Experience</div>
+      <div class="ticker-item"><span>✓</span> Multi-Chain EVM Wallet Reconciliation</div>
+      <div class="ticker-item"><span>✓</span> FIFO Capital Gains Engine · Python</div>
+      <div class="ticker-item"><span>✓</span> CryptoLedger Pro v5.0 · Open Source</div>
+      <div class="ticker-item"><span>✓</span> DeFi Transaction Classification · 15+ Types</div>
+      <div class="ticker-item"><span>✓</span> Etherscan V2 API · DefiLlama Pricing</div>
+      <div class="ticker-item"><span>✓</span> IAS 38 · IFRS 9 · ASU 2023-08</div>
+      <div class="ticker-item"><span>✓</span> Based in Doha, Qatar · Open to Remote</div>
+      <!-- duplicate for infinite loop -->
+      <div class="ticker-item"><span>✓</span> Bitwave Certified Accountant</div>
+      <div class="ticker-item"><span>✓</span> Certified Professional Blockchain Accountant (CPBA)</div>
+      <div class="ticker-item"><span>✓</span> 15+ Years Finance Experience</div>
+      <div class="ticker-item"><span>✓</span> Multi-Chain EVM Wallet Reconciliation</div>
+      <div class="ticker-item"><span>✓</span> FIFO Capital Gains Engine · Python</div>
+      <div class="ticker-item"><span>✓</span> CryptoLedger Pro v5.0 · Open Source</div>
+      <div class="ticker-item"><span>✓</span> DeFi Transaction Classification · 15+ Types</div>
+      <div class="ticker-item"><span>✓</span> Etherscan V2 API · DefiLlama Pricing</div>
+      <div class="ticker-item"><span>✓</span> IAS 38 · IFRS 9 · ASU 2023-08</div>
+      <div class="ticker-item"><span>✓</span> Based in Doha, Qatar · Open to Remote</div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="avail-badge fade-in">
+      <div class="avail-dot"></div>
+      Open to Web3 Finance Roles
+    </div>
+    <p class="hero-eyebrow fade-in delay-1">Crypto Accountant & Finance Automation Engineer</p>
+    <h1 class="fade-in delay-2">
+      Where <em>blockchain</em><br>meets the ledger.
+    </h1>
+    <p class="hero-subtitle fade-in delay-3">
+      I build accounting infrastructure for the on-chain world — from wallet reconciliation and FIFO capital gains engines to DeFi classification frameworks and automated AR tools.
+    </p>
+    <div class="hero-actions fade-in delay-4">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-stats fade-in delay-4">
+      <div class="stat-item">
+        <div class="stat-num">15<span>+</span></div>
+        <div class="stat-label">Years in Finance</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5<span>+</span></div>
+        <div class="stat-label">Tools Built</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2<span>×</span></div>
+        <div class="stat-label">Blockchain Certs</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">80<span>+</span></div>
+        <div class="stat-label">Tokens Mapped in CoA</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-eyebrow">Portfolio</p>
+    <h2 class="section-title">Projects & Tools</h2>
+    <p class="section-desc">Real tools built for real accounting problems — crypto, AR, and finance automation.</p>
+
+    <div class="projects-grid">
+
+      <!-- CryptoLedger Pro -->
+      <div class="project-card">
+        <span class="project-tag tag-python">Python · v5.0</span>
+        <h3 class="project-title">CryptoLedger Pro</h3>
+        <p class="project-desc">
+          A modular multi-chain crypto accounting package with a transaction classification engine, FIFO cost basis, reconciliation, and 7-sheet Excel output.
+        </p>
+        <ul class="project-features">
+          <li>Etherscan V2 API — all EVM chains with one key</li>
+          <li>DefiLlama historical pricing — no API key, no rate limits</li>
+          <li>FIFO capital gains with lot tracking</li>
+          <li>DeFi classification: swaps, staking, bridges, NFTs</li>
+          <li>Spam token detection via Unicode lookalike filter</li>
+          <li>Multi-sheet Excel output with auditor-ready formatting</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/nkareem01190/cryptoledger-pro" target="_blank" class="project-link primary">View on GitHub</a>
+          <a href="https://github.com/nkareem01190/cryptoledger-pro#readme" target="_blank" class="project-link ghost">README</a>
+        </div>
+      </div>
+
+      <!-- DeFi Classification Framework -->
+      <div class="project-card">
+        <span class="project-tag tag-web3">Web3 · Accounting</span>
+        <h3 class="project-title">DeFi Transaction Classification Framework</h3>
+        <p class="project-desc">
+          A structured framework for classifying 15+ DeFi transaction types under IFRS/GAAP accounting standards, with journal entry templates.
+        </p>
+        <ul class="project-features">
+          <li>Swaps, liquidity provision, staking & unstaking</li>
+          <li>Bridges, wrapping/unwrapping, airdrops</li>
+          <li>NFT mints, transfers, sales — IFRS 38 treatment</li>
+          <li>Gas fee attribution rules by transaction type</li>
+          <li>IFRS 9 · IAS 38 · ASU 2023-08 mapped</li>
+        </ul>
+        <div class="project-links">
+          <a href="#" class="project-link primary">View Notes</a>
+          <a href="#" class="project-link ghost">LinkedIn Post</a>
+        </div>
+      </div>
+
+      <!-- AR Aging Dashboard -->
+      <div class="project-card">
+        <span class="project-tag tag-excel">Excel · Python</span>
+        <h3 class="project-title">AR Aging Dashboard & Analyzer</h3>
+        <p class="project-desc">
+          Converts customer statements and PDFs into clean aging reports with overdue tracking, aging buckets, and a professional dashboard.
+        </p>
+        <ul class="project-features">
+          <li>PDF-to-Excel AR extraction pipeline</li>
+          <li>Auto-calculated aging buckets: 30/60/90/120+ days</li>
+          <li>Visual dashboard with charts and KPI tiles</li>
+          <li>Sundry Debtors Analyzer — React browser app</li>
+          <li>Supports multi-currency (QAR / USD)</li>
+        </ul>
+        <div class="project-links">
+          <a href="#" class="project-link primary">View Sample</a>
+          <a href="#" class="project-link ghost">GitHub</a>
+        </div>
+      </div>
+
+      <!-- ChequeWriter Pro -->
+      <div class="project-card">
+        <span class="project-tag tag-python">Python · Desktop</span>
+        <h3 class="project-title">ChequeWriter Pro</h3>
+        <p class="project-desc">
+          A desktop cheque printing application for Qatar (QAR) cheque formats with SQLite persistence, PDF generation, and printer integration.
+        </p>
+        <ul class="project-features">
+          <li>Formatted for QAR Qatari cheque layouts</li>
+          <li>SQLite database for issued cheque history</li>
+          <li>PDF generation with precise position mapping</li>
+          <li>Direct printer integration</li>
+          <li>Arabic numeral amount conversion</li>
+        </ul>
+        <div class="project-links">
+          <a href="#" class="project-link primary">GitHub</a>
+          <a href="#" class="project-link ghost">Screenshots</a>
+        </div>
+      </div>
+
+      <!-- Crypto CSV Normalizer -->
+      <div class="project-card">
+        <span class="project-tag tag-react">React · Browser</span>
+        <h3 class="project-title">Crypto CSV Normalizer</h3>
+        <p class="project-desc">
+          A browser-based tool for normalizing exchange exports from Binance, Coinbase, and Kraken into a unified Koinly-compatible format.
+        </p>
+        <ul class="project-features">
+          <li>Supports Binance, Coinbase, Kraken CSV formats</li>
+          <li>Auto-detects exchange format from column headers</li>
+          <li>Koinly-compatible unified export</li>
+          <li>No server required — runs entirely in browser</li>
+          <li>Deployed on Netlify</li>
+        </ul>
+        <div class="project-links">
+          <a href="#" class="project-link primary">Live Tool</a>
+          <a href="#" class="project-link ghost">GitHub</a>
+        </div>
+      </div>
+
+      <!-- Petty Cash Manager -->
+      <div class="project-card">
+        <span class="project-tag tag-finance">Finance · QAR</span>
+        <h3 class="project-title">Petty Cash Management App</h3>
+        <p class="project-desc">
+          A QAR-denominated petty cash tracker for F&B operations — expense categorization, float management, and monthly reconciliation reports.
+        </p>
+        <ul class="project-features">
+          <li>Opening/closing float tracking</li>
+          <li>Expense categories with department tagging</li>
+          <li>Printable reconciliation report</li>
+          <li>Built for Qatari Italian Moka & Co operations</li>
+        </ul>
+        <div class="project-links">
+          <a href="#" class="project-link primary">View App</a>
+          <a href="#" class="project-link ghost">GitHub</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- TOOLS -->
+  <section id="tools">
+    <p class="section-eyebrow">Stack</p>
+    <h2 class="section-title">Tools & Technologies</h2>
+    <p class="section-desc">The intersection of traditional accounting and Web3 infrastructure.</p>
+
+    <div class="tools-grid">
+      <div class="tool-item">
+        <span class="tool-icon">🐍</span>
+        <div><div class="tool-name">Python</div><div class="tool-cat">Automation & Data</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">📊</span>
+        <div><div class="tool-name">Excel / Power Query</div><div class="tool-cat">Reporting</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">⛓️</span>
+        <div><div class="tool-name">Etherscan V2 API</div><div class="tool-cat">Blockchain Data</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">🦙</span>
+        <div><div class="tool-name">DefiLlama API</div><div class="tool-cat">Historical Pricing</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">🌊</span>
+        <div><div class="tool-name">Bitwave</div><div class="tool-cat">Crypto Accounting</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">⚛️</span>
+        <div><div class="tool-name">React</div><div class="tool-cat">Web Tools</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">🐼</span>
+        <div><div class="tool-name">Pandas</div><div class="tool-cat">Data Analysis</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">📚</span>
+        <div><div class="tool-name">QuickBooks / Xero</div><div class="tool-cat">Accounting Software</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">🔍</span>
+        <div><div class="tool-name">Blockchain Explorers</div><div class="tool-cat">On-chain Audit</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">☁️</span>
+        <div><div class="tool-name">Netlify / Cloudflare</div><div class="tool-cat">Deployment</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">🗄️</span>
+        <div><div class="tool-name">SQLite</div><div class="tool-cat">Local Databases</div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-icon">📄</span>
+        <div><div class="tool-name">ReportLab / OpenPyXL</div><div class="tool-cat">PDF & Excel Output</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- CREDENTIALS -->
+  <section id="credentials">
+    <p class="section-eyebrow">Credentials</p>
+    <h2 class="section-title">Certifications & Training</h2>
+    <p class="section-desc">Bridging traditional accounting standards with blockchain-native protocols.</p>
+
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon">🌊</div>
+        <div>
+          <div class="cert-name">Bitwave Certified Accountant</div>
+          <div class="cert-issuer">Bitwave</div>
+          <div class="cert-year">2024</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">⛓️</div>
+        <div>
+          <div class="cert-name">Certified Professional Blockchain Accountant</div>
+          <div class="cert-issuer">CPBA Program</div>
+          <div class="cert-year">2024</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">📈</div>
+        <div>
+          <div class="cert-name">CMA (In Progress)</div>
+          <div class="cert-issuer">IMA · Gleim</div>
+          <div class="cert-year">2025 →</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🎓</div>
+        <div>
+          <div class="cert-name">CDAA (Exploring)</div>
+          <div class="cert-issuer">Certified Digital Asset Accountant</div>
+          <div class="cert-year">2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">📘</div>
+        <div>
+          <div class="cert-name">IFRS / IAS Standards</div>
+          <div class="cert-issuer">IAS 38 · IFRS 9 · IFRS 15</div>
+          <div class="cert-year">Applied</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🇺🇸</div>
+        <div>
+          <div class="cert-name">US GAAP Crypto Standards</div>
+          <div class="cert-issuer">ASU 2023-08 · FASB</div>
+          <div class="cert-year">Applied</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- BLOG -->
+  <section id="blog">
+    <p class="section-eyebrow">Writing</p>
+    <h2 class="section-title">Blog & Insights</h2>
+    <p class="section-desc">Practical notes on crypto accounting, Web3 finance, and building automation tools.</p>
+
+    <div class="blog-grid">
+
+      <div class="blog-card">
+        <div class="blog-meta">
+          <span class="blog-category">DeFi Accounting</span>
+          <div class="blog-dot"></div>
+          <span class="blog-date">Coming Soon</span>
+        </div>
+        <h3 class="blog-title">How to Account for Uniswap LP Positions Under IFRS</h3>
+        <p class="blog-excerpt">A practical walkthrough of impermanent loss, fee income recognition, and the IFRS treatment of liquidity pool tokens as financial instruments.</p>
+        <span class="blog-readmore">Read article</span>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-meta">
+          <span class="blog-category">Python</span>
+          <div class="blog-dot"></div>
+          <span class="blog-date">Coming Soon</span>
+        </div>
+        <h3 class="blog-title">Building a FIFO Capital Gains Engine for EVM Wallets</h3>
+        <p class="blog-excerpt">Step-by-step: how CryptoLedger Pro calculates cost basis using FIFO, handles gas fee allocation, and outputs an auditor-ready Excel workbook.</p>
+        <span class="blog-readmore">Read article</span>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-meta">
+          <span class="blog-category">Standards</span>
+          <div class="blog-dot"></div>
+          <span class="blog-date">Coming Soon</span>
+        </div>
+        <h3 class="blog-title">ASU 2023-08 Explained: What It Means for Crypto on Your Balance Sheet</h3>
+        <p class="blog-excerpt">FASB's new fair value measurement guidance for crypto assets — what changed, what it means for preparers, and how to implement it in your chart of accounts.</p>
+        <span class="blog-readmore">Read article</span>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-meta">
+          <span class="blog-category">Web3 Career</span>
+          <div class="blog-dot"></div>
+          <span class="blog-date">Coming Soon</span>
+        </div>
+        <h3 class="blog-title">From TradFi to Web3: A Finance Professional's Transition Roadmap</h3>
+        <p class="blog-excerpt">What certifications actually matter, which tools to learn, and how to position 15 years of accounting experience as an asset — not a liability — in Web3.</p>
+        <span class="blog-readmore">Read article</span>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-meta">
+          <span class="blog-category">Tools</span>
+          <div class="blog-dot"></div>
+          <span class="blog-date">Coming Soon</span>
+        </div>
+        <h3 class="blog-title">Classifying 15 DeFi Transaction Types for Your Accountant</h3>
+        <p class="blog-excerpt">A cheat sheet covering swaps, staking, bridges, airdrops, NFT mints, wrapping, and liquidity events — with the accounting entry for each.</p>
+        <span class="blog-readmore">Read article</span>
+      </div>
+
+      <div class="blog-card">
+        <div class="blog-meta">
+          <span class="blog-category">Automation</span>
+          <div class="blog-dot"></div>
+          <span class="blog-date">Coming Soon</span>
+        </div>
+        <h3 class="blog-title">Automating Accounts Receivable with Python and PDF Parsing</h3>
+        <p class="blog-excerpt">How I built a pipeline to extract customer SOAs from PDFs, auto-populate aging buckets, and generate a dashboard — without touching Excel manually.</p>
+        <span class="blog-readmore">Read article</span>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-eyebrow">Background</p>
+    <h2 class="section-title">About Me</h2>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm <strong>Niyas Kareem</strong>, a finance professional with <strong>15+ years of traditional accounting experience</strong>, now building a specialization at the intersection of crypto, Web3, and finance automation.
+        </p>
+        <p>
+          Based in <strong>Doha, Qatar</strong>, I currently manage finance operations at <strong>Qatari Italian Moka & Co</strong> — while simultaneously building open-source accounting tools for the on-chain world.
+        </p>
+        <p>
+          My focus: making blockchain transactions legible to accountants, and making accounting tools usable by builders. I hold the <strong>Bitwave Certified Accountant</strong> and <strong>CPBA</strong> credentials, and I'm actively targeting Web3 Finance and DAO Treasury roles.
+        </p>
+        <p>
+          I built CryptoLedger Pro from scratch — from a basic CSV cleaner to a modular multi-chain accounting engine — because I couldn't find a tool that thought like an accountant.
+        </p>
+      </div>
+      <div class="about-stack">
+        <div class="stack-group">
+          <div class="stack-label">Accounting</div>
+          <div class="stack-chips">
+            <span class="chip">IFRS</span><span class="chip">GAAP</span>
+            <span class="chip">IAS 38</span><span class="chip">IFRS 9</span>
+            <span class="chip">ASU 2023-08</span><span class="chip">AR Management</span>
+            <span class="chip">Cost Accounting</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <div class="stack-label">Web3 & Crypto</div>
+          <div class="stack-chips">
+            <span class="chip">DeFi</span><span class="chip">EVM Chains</span>
+            <span class="chip">NFT Accounting</span><span class="chip">FIFO/LIFO</span>
+            <span class="chip">Wallet Audit</span><span class="chip">DAO Treasury</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <div class="stack-label">Tech</div>
+          <div class="stack-chips">
+            <span class="chip">Python</span><span class="chip">React</span>
+            <span class="chip">Pandas</span><span class="chip">Excel</span>
+            <span class="chip">SQL</span><span class="chip">REST APIs</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <div class="stack-label">Languages</div>
+          <div class="stack-chips">
+            <span class="chip">English</span><span class="chip">Malayalam</span><span class="chip">Arabic (Basic)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact" style="padding-top: 80px; padding-bottom: 100px;">
+    <div class="contact-section">
+      <p class="section-eyebrow" style="text-align:center; margin-bottom:8px;">Contact</p>
+      <h2 class="section-title">Let's Work Together</h2>
+      <p>Open to Web3 finance roles, DAO treasury consulting, and crypto accounting projects. Based in Doha — available remotely worldwide.</p>
+      <div class="contact-links">
+        <a href="mailto:N.kareem01190@gmail.com" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          Email Me
+        </a>
+        <a href="https://linkedin.com/in/niyaskareem1" target="_blank" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/nkareem01190/cryptoledger-pro" target="_blank" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">niyas<span>.finance</span></div>
+    <div>© 2026 Niyas Kareem · Crypto Accountant · Doha, Qatar</div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-dim);">
+      proof_of_work: verified ✓
+    </div>
+  </footer>
+
+  <script>
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+          e.target.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.project-card, .tool-item, .cert-card, .blog-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(12px)';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
